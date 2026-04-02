@@ -1,0 +1,21 @@
+# Fly.io ignore file
+node_modules/
+.git/
+.gitignore
+*.md
+docs/
+reference/
+traffic-generator/
+
+# Build artifacts
+dashboard-web/node_modules/
+dashboard-web/dist/
+relayer/target/
+eth-contract/out/
+eth-contract/cache/
+eth-contract/lib/forge-std/test/
+
+# Development files
+*.log
+.env
+.DS_Store
