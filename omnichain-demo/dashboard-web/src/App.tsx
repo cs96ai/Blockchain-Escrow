@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useAnalysis, useBackendHealth, useEventStream, useMetrics, useSimulation, useSystemHealth, useTransactionDetail, useTransactions } from './hooks';
 import type { CrossChainMessage, GasInfo, LifecycleEvent, SubsystemHealth, SubsystemStatus } from './types';
@@ -64,6 +64,13 @@ export default function App() {
   const [selectedNonce, setSelectedNonce] = useState<number | null>(null);
   const [mobileTab, setMobileTab] = useState<'list' | 'detail' | 'events'>('list');
   const detail = useTransactionDetail(selectedNonce);
+
+  // Auto-select first transaction when transactions load
+  useEffect(() => {
+    if (transactions.length > 0 && selectedNonce === null) {
+      setSelectedNonce(transactions[0].nonce);
+    }
+  }, [transactions, selectedNonce]);
 
   if (backend.status !== 'online') {
     return <ColdStartScreen elapsed={backend.elapsed} />;
